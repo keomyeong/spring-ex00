@@ -1,0 +1,29 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+
+<%@ taglib prefix = "c" uri ="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<%@ include  file = "/WEB-INF/subModules/bootstrapHeader.jsp" %>
+
+<title>Insert title here</title>
+</head>
+<body>
+<div class= "container">
+	<a href="<%=request.getContextPath()%>/ex01/sub03" method="get">sub03 get</a> <br>
+	<form action="<%=request.getContextPath()%>/ex01/sub04" method="post">
+	<p>sub04 post</p>
+	<input type="submit" value="post 전송">
+	</form>
+	
+	<hr>
+	<form action="<%=request.getContextPath()%>/ex01/sub06" method="post">
+	<p>sub06 post</p>
+	<input type="submit" value="post 전송">
+	</form>
+</div>
+</body>
+</html>
