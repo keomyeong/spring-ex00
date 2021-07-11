@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
@@ -54,10 +56,12 @@ public class BoardController {
 	}
 
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	@PreAuthorize("isAuthenticated()")
+	public String register(BoardVO board,@RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
 		
+		board.setFileName(file.getOriginalFilename());
 		// service에게 등록업무 시키고
-		service.register(board); // title, content, writer
+		service.register(board, file); // title, content, writer
 		
 		// redirect목적지로 정보 전달
 		rttr.addFlashAttribute("result", board.getBno());
@@ -84,11 +88,14 @@ public class BoardController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr) {
+//	@PreAuthorize("authication.username == #board.writer") // spring.io
+	@PreAuthorize("principal.username == #board.writer") // 720
+	public String modify(BoardVO board, Criteria cri, 
+			@RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
 		// request parameter 수집
 		
 		// service 일 시킴
-		boolean success = service.modify(board);
+		boolean success = service.modify(board, file);
 		
 		// 결과를 모델(또는 FlashMap)에 넣고
 		if (success) {
@@ -106,7 +113,8 @@ public class BoardController {
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
+	@PreAuthorize("principal.username == #writer")//720p
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
 		// parameter 수집
 		
 		// service 일
@@ -126,6 +134,7 @@ public class BoardController {
 		
 	}
 	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()") // 673쪽
 	public void register(@ModelAttribute("cri") Criteria cri) {
 		// forward /WEB-INF/views/board/register.jsp
 	}

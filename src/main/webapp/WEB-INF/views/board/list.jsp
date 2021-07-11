@@ -75,17 +75,19 @@
 								<c:param name="amount" value="${pageMaker.cri.amount }" />
 								<c:param name="type" value="${pageMaker.cri.type }" />
 								<c:param name="keyword" value="${pageMaker.cri.keyword }" />
-
 							</c:url> 
-							<a href="${getUrl}"> ${board.title } <c:if
-									test="${board.replyCnt > 0 }">
-							[${board.replyCnt }]
-						</c:if>
-						<td>${board.writer }</td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
+							<a href="${getUrl}"> ${board.title } </a> 
+							<c:if test="${board.replyCnt > 0 }">
+								<i class="far fa-comment-dots"></i> ${board.replyCnt }
+							</c:if>
+							<td>${board.writerName }</td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd"
 								value="${board.regdate }" /></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.updateDate }" /></td>
+						<%--
+					<td>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate }"/>
+					</td>
+					 --%>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -21,7 +21,7 @@
 	
 	<div class="row">
 		<div class="col-12">
-			<form action="${appRoot}/board/register" method="post">
+			<form action="${appRoot }/board/register" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="input1">제목</label>
 					<input id="input1" class="form-control" name="title">
@@ -31,8 +31,13 @@
 					<textarea id="textarea1" class="form-control" name="content"></textarea>
 				</div>
 				<div class="form-group">
+					<label for="input3">파일</label>
+					<input id="input3" class="form-control" type="file" name="file" accept="image/*">
+				</div>
+				<div class="form-group">
 					<label for="input2">작성자</label>
-					<input id="input2" class="form-control" name="writer">
+					<input id="input2" type="hidden" value="${pinfo.member.userid }" readonly class="form-control" name="writer">
+					<input value="${pinfo.member.userName }" readonly class="form-control">
 				</div>				
 				<input class="btn btn-primary" type="submit" value="작성" />
 			</form>
