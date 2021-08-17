@@ -15,8 +15,10 @@ create TABLE tbl_member_auth(
     auth VARCHAR(50) NOT NULL,
     FOREIGN KEY (userid) REFERENCES tbl_member(userid)
 );
+
 DELETE FROM tbl_member WHERE userid = 'member';
 delete from tbl_member_auth where userid = 'member';
+
 SELECT * FROM tbl_member;
 SELECT * FROM tbl_member_auth;
  SELECT 

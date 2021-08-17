@@ -6,7 +6,7 @@ create table persistent_logins (
 );
 
 desc persistent_logins;
-
+use spr1;
 SELECT * FROM tbl_board;
 SELECT * FROM tbl_member;
 SELECT * FROM tbl_reply;
@@ -20,6 +20,4 @@ set replyer = 'member';
 
 ALTER TABLE tbl_board
 ADD FOREIGN KEY (writer) REFERENCES tbl_member(userid);
-
-
 
